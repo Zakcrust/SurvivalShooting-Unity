@@ -25,7 +25,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Awake ()
     {
-        anim = GetComponent <Animator> ();
+        anim = gameObject.GetComponent <Animator> ();
         playerAudio = GetComponent <AudioSource> ();
         playerMovement = GetComponent <PlayerMovement> ();
         //playerShooting = GetComponentInChildren <PlayerShooting> ();
@@ -67,10 +67,10 @@ public class PlayerHealth : MonoBehaviour
     void Death ()
     {
         isDead = true;
-
+        
         //playerShooting.DisableEffects ();
-
-        anim.SetTrigger ("Die");
+        anim.SetBool("IsDie",isDead);
+        anim.SetTrigger ("Death");
 
         playerAudio.clip = deathClip;
         playerAudio.Play ();
