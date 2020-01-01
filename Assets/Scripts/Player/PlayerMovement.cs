@@ -3,11 +3,13 @@
 public class PlayerMovement : MonoBehaviour
 {
 	public float speed = 6f;
+	float defaultSpeed;
 	Vector3 movement;
 	Animator anim;
 	Rigidbody playerRigidbody;
 	int floorMask;
 	float camRayLength = 100f;
+	bool isUsingPowerUp = false;
 
 	private void Awake()
 	{
@@ -19,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
 		//Mendapatkan komponen Rigidbody
 		playerRigidbody = GetComponent<Rigidbody>();
+		defaultSpeed = speed;
 	}
 
 	private void FixedUpdate()
@@ -28,6 +31,15 @@ public class PlayerMovement : MonoBehaviour
 
 		//Mendapatkan nilai input vertical (-1,0,1)
 		float v = Input.GetAxisRaw("Vertical");
+
+		if (Input.GetKeyDown("space"))
+        {
+            if(!isUsingPowerUp)
+			{
+				isUsingPowerUp = true;
+				usePowerUp();
+			}
+        }
 
 		Move(h, v);
 		Turning ();
@@ -74,8 +86,24 @@ public class PlayerMovement : MonoBehaviour
 	void Animating(float h, float v)
 	{
 		bool walking = h != 0f || v != 0f;
-		Debug.Log (walking);
 		anim.SetBool("IsWalking", walking);
+	}
+
+	void usePowerUp()
+	{
+		if(ScoreManager.SpeedBoost > 0)
+		{
+			speed *= 2;
+			ScoreManager.SpeedBoost--;
+		}
+		Debug.Log("Power Up Used");
+		Invoke("resetSpeed", 5.0f);
+	}
+
+	void resetSpeed()
+	{
+		isUsingPowerUp = false;
+		speed = defaultSpeed;
 	}
 
 }

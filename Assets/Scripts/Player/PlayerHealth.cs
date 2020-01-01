@@ -8,6 +8,9 @@ public class PlayerHealth : MonoBehaviour
 {
     public int startingHealth = 100;
     public int currentHealth;
+    public int CurrentHealth { get {
+        return currentHealth;
+    }}
     public Slider healthSlider;
     public Image damageImage;
     public AudioClip deathClip;
@@ -18,7 +21,7 @@ public class PlayerHealth : MonoBehaviour
     Animator anim;
     AudioSource playerAudio;
     PlayerMovement playerMovement;
-    //PlayerShooting playerShooting;
+    PlayerShooting playerShooting;
     bool isDead;
     bool damaged;
 
@@ -28,7 +31,7 @@ public class PlayerHealth : MonoBehaviour
         anim = gameObject.GetComponent <Animator> ();
         playerAudio = GetComponent <AudioSource> ();
         playerMovement = GetComponent <PlayerMovement> ();
-        //playerShooting = GetComponentInChildren <PlayerShooting> ();
+        playerShooting = GetComponentInChildren <PlayerShooting> ();
         currentHealth = startingHealth;
     }
 

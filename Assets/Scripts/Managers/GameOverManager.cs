@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class GameOverManager : MonoBehaviour
 {
     public PlayerHealth playerHealth;
-
-
+    public Text warningText;
     Animator anim;
 
 
@@ -20,5 +20,13 @@ public class GameOverManager : MonoBehaviour
         {
             anim.SetTrigger("GameOver");
         }
+
+    }
+
+    public void ShowWarning(float enemyDistance)
+    {
+        warningText.text = string.Format("! {0} m",Mathf.RoundToInt(enemyDistance));
+        anim.SetTrigger("Warning");
+        Debug.Log("warning called");
     }
 }
